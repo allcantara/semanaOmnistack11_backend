@@ -7,18 +7,24 @@ const {
     SessionController
 } = require('./app/controllers')
 
+const {
+    ProfileValidation,
+    SessionValidation,
+    OngsValidationCreate,
+    IncidentsValidationCreate,
+    IncidentsValidationDelete,
+    IncidentsValidationIndex
+} = require('./app/validations')
+
 const router = express.Router()
 
-router.post('/sessions', SessionController.create)
-
-router.post('/ongs', OngController.store)
+router.post('/sessions', SessionValidation, SessionController.create)
+router.post('/ongs', OngsValidationCreate, OngController.store)
 router.get('/ongs', OngController.index)
-
-router.post('/incidents', IncidentController.create)
-router.get('/incidents', IncidentController.index)
-router.delete('/incidents/:id', IncidentController.delete)
-
-router.get('/profile', ProfileController.index)
-
+router.post('/incidents', IncidentsValidationCreate, IncidentController.create)
+router.get('/incidents', IncidentsValidationIndex, IncidentController.index)
+router.delete('/incidents/:id', IncidentsValidationDelete, IncidentController.delete)
+router.get('/profile', ProfileValidation, ProfileController.index)
 
 module.exports = router
+
